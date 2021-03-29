@@ -1,0 +1,23 @@
+POST http://192.168.1.36:8080/users 
+Content-Type: application/json
+
+{
+  "email":"test@test.com",
+  "phone":2640000000,
+  "country":"Argentina",
+  "province":"San Juan",
+  "location":"Capital",
+  "type":"guest",
+  "docType":"DNI",
+  "docNumber":11111111,
+  "name":"Test",
+  "lastName":"User",
+  "birthday":"1998-06-21",
+  "street":"Perito Moreno Norte 728",
+  "password":"123456789"
+}
+###
+
+GET http://192.168.1.36:8080/users/account/3/PESOS
+###
+GET http://192.168.1.36:8080/users/statistics/2589600020599/months

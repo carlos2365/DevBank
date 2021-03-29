@@ -1,0 +1,62 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: ${GATEWAY_HOST}
+apiEndpoints:
+  api:
+    host: ${GATEWAY_HOST}
+    paths: '/ip'
+  users:
+    host: ${GATEWAY_HOST}
+    paths: ['/users', '/users/*']
+  transacciones:
+    host: localhost
+    paths: ['/transacciones', '/transacciones/*']
+serviceEndpoints:
+  httpbin:
+    url: "https://httpbin.org"
+  usersService:
+    url: 'http://${GATEWAY_HOST}:3000'
+  transaccionesService:
+    url: 'http://${GATEWAY_HOST}:4000'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  usersPipeline:
+    apiEndpoints:
+      - users
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: usersService
+              changeOrigin: true
+  transaccionesPipeline:
+    apiEndpoints:
+      - transacciones
+    policies:
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: transaccionesService
+              changeOrigin: true
